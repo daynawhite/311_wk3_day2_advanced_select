@@ -32,25 +32,49 @@ We are going to run a couple SQL queries and put the answers in the "Query Respo
 2. Find the most popular area code in the `usersContact` table. 
   * Hint: SUBSTR, GROUP BY
 
-3. Find the MIN first_name, the county, and a count of all users in that county for counties with more than 10 users. There will be four results. List the last one. 
+3. Find the MIN first_name, 
+the county, 
+and a count of all users in that county
+
+for counties with more than 10 users. 
+
+There will be four results. List the last one. 
   * Hint: MIN, COUNT, JOIN, GROUP BY, HAVING
 
 
 ## Query Responses
 
-1. Sums
-  * AK:
-  * CT
-  * TX:
-  * WY:
+1. Sums: SELECT SUM(user_id), state FROM usersAddress GROUP BY state;
+  * AK: 1422
+  * CT: 999
+  * TX: 7908
+  * WY: 1271
 
-2.
-  * Area code:
+2. SELECT SUBSTR(phone1,1,3),
+COUNT(SUBSTR(phone1,1,3))
+FROM usersContact
+GROUP BY SUBSTR(phone1,1,3);
+
+SELECT SUBSTR(phone2,1,3),
+COUNT(SUBSTR(phone2,1,3))
+FROM usersContact
+GROUP BY SUBSTR(phone2,1,3);
+  * Area code: 973
 
 3.
-  * first_name:
-  * county:
-  * county total:
+<!-- I had a really hard time figuring out what this question was even wanting me to do!  It is phrased in such a way as to make it super confusing to decipher!  The question should START WITH the phrase "For counties with more than 10 users,..." -->
+SELECT MIN(users.first_name), county
+FROM users
+INNER JOIN usersAddress
+ON users.id=usersAddress.user_id
+GROUP BY county
+HAVING COUNT(user_id) > 10
+ORDER BY COUNT(user_id) DESC;
+  * first_name: Alaine
+
+  * county: Orange
+
+  * county total: 11
 
 
 ## Summary
